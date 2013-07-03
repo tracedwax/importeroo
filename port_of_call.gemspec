@@ -10,9 +10,9 @@ Gem::Specification.new do |gem|
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
-  gem.name          = "km_everything"
+  gem.name          = "port_of_call"
   gem.require_paths = ["lib"]
-  gem.version       = KmEverything::VERSION
+  gem.version       = PortOfCall::VERSION
   gem.license       = "MIT"
 
   gem.required_ruby_version = '>= 1.9.2'
