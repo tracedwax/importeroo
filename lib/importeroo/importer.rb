@@ -1,7 +1,8 @@
 require 'roo'
+require 'pry'
 
 module Importeroo
-  class Importer < Struct.new(:klass, :filename)
+  class Importer < Struct.new(:klass, :data_source_type, :data_source)
     FIELDS_TO_EXCLUDE = ["created_at", "updated_at"]
 
     def import!
@@ -17,7 +18,15 @@ module Importeroo
     private
 
     def data
-      @data ||= Roo::Csv.new(filename, nil, :ignore)
+      if data_source == "Google"
+        GoogleDrive.login("port.of.call.test@gmail.com", "importexport123")
+      end
+
+      @data ||= roo_class.new(data_source, nil, :ignore)
+    end
+
+    def roo_class
+      "Roo::#{data_source_type.titleize}".constantize
     end
 
     def import_row!(row)
