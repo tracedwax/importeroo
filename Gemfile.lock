@@ -1,28 +1,48 @@
 PATH
   remote: .
   specs:
-    km_everything (0.1.0)
+    port_of_call (0.1.0)
+      roo
 
 GEM
   remote: https://rubygems.org/
   specs:
-    activemodel (3.2.13)
-      activesupport (= 3.2.13)
-      builder (~> 3.0.0)
-    activerecord (3.2.13)
-      activemodel (= 3.2.13)
-      activesupport (= 3.2.13)
-      arel (~> 3.0.2)
-      tzinfo (~> 0.3.29)
-    activesupport (3.2.13)
-      i18n (= 0.6.1)
-      multi_json (~> 1.0)
-    arel (3.0.2)
-    builder (3.0.4)
+    activemodel (4.0.0)
+      activesupport (= 4.0.0)
+      builder (~> 3.1.0)
+    activerecord (4.0.0)
+      activemodel (= 4.0.0)
+      activerecord-deprecated_finders (~> 1.0.2)
+      activesupport (= 4.0.0)
+      arel (~> 4.0.0)
+    activerecord-deprecated_finders (1.0.3)
+    activesupport (4.0.0)
+      i18n (~> 0.6, >= 0.6.4)
+      minitest (~> 4.2)
+      multi_json (~> 1.3)
+      thread_safe (~> 0.1)
+      tzinfo (~> 0.3.37)
+    arel (4.0.0)
+    atomic (1.1.10)
+    builder (3.1.4)
+    coderay (1.0.9)
     diff-lcs (1.2.2)
-    i18n (0.6.1)
+    i18n (0.6.4)
+    method_source (0.8.1)
+    mini_portile (0.5.1)
+    minitest (4.7.5)
     multi_json (1.7.7)
+    nokogiri (1.6.0)
+      mini_portile (~> 0.5.0)
+    pry (0.9.12.2)
+      coderay (~> 1.0.5)
+      method_source (~> 0.8)
+      slop (~> 3.4)
     rake (10.0.4)
+    roo (1.11.2)
+      nokogiri
+      rubyzip
+      spreadsheet (> 0.6.4)
     rspec (2.13.0)
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
@@ -31,13 +51,27 @@ GEM
     rspec-expectations (2.13.0)
       diff-lcs (>= 1.1.3, < 2.0)
     rspec-mocks (2.13.0)
+    ruby-ole (1.2.11.7)
+    rubyzip (0.9.9)
+    slop (3.4.5)
+    spreadsheet (0.8.5)
+      ruby-ole (>= 1.0)
+    sqlite3 (1.3.7)
+    thread_safe (0.1.0)
+      atomic
     tzinfo (0.3.37)
+    with_model (0.3.2)
+      activerecord (>= 2.3.5, < 5.0.0)
+      rspec (~> 2.11)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord (~> 3.2.13)
-  km_everything!
+  activerecord-jdbcsqlite3-adapter
+  port_of_call!
+  pry
   rake
   rspec (~> 2.11)
+  sqlite3
+  with_model (~> 0.3)

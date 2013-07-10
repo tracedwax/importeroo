@@ -1,10 +1,12 @@
+require 'roo'
+
 module PortOfCall
-  class Importer < Struct.new(:klass, :data)
-    FIELDS_TO_EXCLUDE = ["id", "created_at", "updated_at"]
+  class Importer < Struct.new(:klass, :filename)
+    FIELDS_TO_EXCLUDE = ["created_at", "updated_at"]
 
     def import!
       ActiveRecord::Base.transaction do
-        ActiveRecord::Base.connection.execute("TRUNCATE #{underscore(klass.name)}")
+        ActiveRecord::Base.connection.execute("DELETE FROM #{klass.table_name}")
 
         (2..data.last_row).each do |row_num|
           import_row! data.row(row_num)
@@ -13,6 +15,10 @@ module PortOfCall
     end
 
     private
+
+    def data
+      @data ||= Roo::Csv.new(filename, nil, :ignore)
+    end
 
     def import_row!(row)
       record = klass.new
