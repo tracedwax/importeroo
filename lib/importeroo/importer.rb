@@ -18,10 +18,6 @@ module Importeroo
     private
 
     def data
-      if data_source == "Google"
-        GoogleDrive.login("port.of.call.test@gmail.com", "importexport123")
-      end
-
       @data ||= roo_class.new(data_source, nil, :ignore)
     end
 
