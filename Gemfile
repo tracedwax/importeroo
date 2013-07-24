@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in port_of_call.gemspec
+# Specify your gem's dependencies in importeroo.gemspec
 gemspec
 
 gem "rake"

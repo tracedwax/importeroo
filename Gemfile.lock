@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    port_of_call (0.1.0)
+    importeroo (0.1.0)
       roo
 
 GEM
@@ -69,7 +69,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-jdbcsqlite3-adapter
-  port_of_call!
+  importeroo!
   pry
   rake
   rspec (~> 2.11)

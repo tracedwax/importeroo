@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'port_of_call/importer'
+require 'importeroo/importer'
 
-describe PortOfCall::Importer do
+describe Importeroo::Importer do
   with_model :BicycleType do
     table do |t|
       t.string :bicycle_type
