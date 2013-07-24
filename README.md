@@ -19,7 +19,7 @@ In db/seeds.rb:
 
     require 'importeroo/importer'
 
-    Importeroo::Importer.new(MyActiveRecordClass, "FileType", "path/to/file")
+    Importeroo::Importer.new(MyActiveRecordClass, "FileType", "path/to/file").import!
 
 Options are:
 
@@ -27,6 +27,6 @@ Options are:
     Importeroo::Importer.new(MyActiveRecordClass, "OpenOffice", "path/to/file.ods")
     Importeroo::Importer.new(MyActiveRecordClass, "CSV", "path/to/file.csv")
 
-Recommended file path:
-    data/import/my_active_record_class_pluralized.csv, etc
+Recommended path to file:
+    data/import/my_active_record_class_pluralized.csv
 
