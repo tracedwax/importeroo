@@ -40,5 +40,16 @@ describe Importeroo::Importer do
 
       it_should_behave_like "a table importer from an external source"
     end
+
+    context "when a Google Spreadsheet" do
+      before do
+        BicycleType.create(id: 5, bicycle_type: "velocipede")
+
+        described_class
+          .new(BicycleType, "Google", "0AmX1I4h6m35OdFhlbDdLdnZfTUFnSVRzd0hqMjM1bUE").import!
+      end
+
+      it_should_behave_like "a table importer from an external source"
+    end
   end
 end

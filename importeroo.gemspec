@@ -18,6 +18,7 @@ Gem::Specification.new do |gem|
   gem.required_ruby_version = '>= 1.9.2'
 
   gem.add_dependency 'roo'
+  gem.add_dependency 'google-spreadsheet-ruby'
 
   gem.add_development_dependency 'rspec', '~> 2.11'
   gem.add_development_dependency 'with_model', '~> 0.3'
