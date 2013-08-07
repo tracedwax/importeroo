@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    importeroo (0.1.1)
+    importeroo (0.2.0)
       google-spreadsheet-ruby
       roo
 
