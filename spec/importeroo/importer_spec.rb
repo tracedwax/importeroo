@@ -42,17 +42,35 @@ describe Importeroo::Importer do
     end
 
     context "when a Google Spreadsheet" do
-      before do
-        Importeroo.google_username = "port.of.call.test@gmail.com"
-        Importeroo.google_password = "importexport123"
+      context "when explicitly set" do
+        before do
+          Importeroo.google_username = "port.of.call.test@gmail.com"
+          Importeroo.google_password = "importexport123"
 
-        BicycleType.create(id: 5, bicycle_type: "velocipede")
+          BicycleType.create(id: 5, bicycle_type: "velocipede")
 
-        described_class
-          .new(BicycleType, "Google", "0AmX1I4h6m35OdFhlbDdLdnZfTUFnSVRzd0hqMjM1bUE").import!
+          described_class
+            .new(BicycleType, "Google", "0AmX1I4h6m35OdFhlbDdLdnZfTUFnSVRzd0hqMjM1bUE").import!
+        end
+
+        it_should_behave_like "a table importer from an external source"
+
+        after do
+          Importeroo.google_username = nil
+          Importeroo.google_password = nil
+        end
       end
 
-      it_should_behave_like "a table importer from an external source"
+      context "when not explicitly set", focus: true do
+        before do
+          BicycleType.create(id: 5, bicycle_type: "velocipede")
+
+          described_class
+            .new(BicycleType, "Google", "0AmX1I4h6m35OdFhlbDdLdnZfTUFnSVRzd0hqMjM1bUE").import!
+        end
+
+        it_should_behave_like "a table importer from an external source"
+      end
     end
   end
 end
