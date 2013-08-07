@@ -1,6 +1,8 @@
 require 'roo'
 
 module Importeroo
+  mattr_accessor :google_username, :google_password
+
   class Importer < Struct.new(:klass, :data_source_type, :data_source)
     FIELDS_TO_EXCLUDE = ["created_at", "updated_at"]
 
@@ -17,7 +19,21 @@ module Importeroo
     private
 
     def data
-      @data ||= roo_class.new(data_source, nil, :ignore)
+      @data ||= load_data
+    end
+
+    def load_data
+      google_data || non_google_data
+    end
+
+    def google_data
+      if data_source_type == "Google"
+        roo_class.new(data_source, Importeroo.google_username, Importeroo.google_password)
+      end
+    end
+
+    def non_google_data
+      roo_class.new(data_source, nil, :ignore)
     end
 
     def roo_class

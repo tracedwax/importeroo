@@ -21,7 +21,20 @@ In db/seeds.rb:
 
     Importeroo::Importer.new(MyActiveRecordClass, "FileType", "path/to/file").import!
 
-Options are:
+For Google Docs:
+
+    Importeroo::Importer.new(MyActiveRecordClass, "Google", "KEYcodeFROMgdocsURL")
+
+    The code for the google doc is the long alphanumeric key listed in the URL.  For example, for https://docs.google.com/spreadsheet/ccc?key=0AmX1I4h6m35OdFhlbDdLdnZfTUFnSVRzd0hqMjM1bUE#gid=0, the key is 0AmX1I4h6m35OdFhlbDdLdnZfTUFnSVRzd0hqMjM1bUE.
+
+    If your doc is not visible to anyone with the URL, you will also need to set the google username and password:
+
+    In config/importeroo.rb, or anywhere:
+
+    Importeroo.google_username = ENV["GOOGLE_USERNAME"]
+    Importeroo.google_password = ENV["GOOGLE_PASSWORD"]
+
+For CSV, Excel, or OpenOffice:
 
     Importeroo::Importer.new(MyActiveRecordClass, "CSV", "path/to/file.csv")
     Importeroo::Importer.new(MyActiveRecordClass, "Excelx", "path/to/file.xlsx") # current Excel
