@@ -43,6 +43,9 @@ describe Importeroo::Importer do
 
     context "when a Google Spreadsheet" do
       before do
+        Importeroo.google_username = "port.of.call.test@gmail.com"
+        Importeroo.google_password = "importexport123"
+
         BicycleType.create(id: 5, bicycle_type: "velocipede")
 
         described_class
