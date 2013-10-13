@@ -3,12 +3,20 @@ require 'roo'
 module Importeroo
   mattr_accessor :google_username, :google_password
 
-  class Importer < Struct.new(:klass, :data_source_type, :data_source)
+  class Importer < Struct.new(:data_source_type, :data_source)
     FIELDS_TO_EXCLUDE = ["created_at", "updated_at"]
 
-    def import!
+    def import!(klass, options = {})
+      @klass=klass
+      @fields=nil
+      @data=nil
+
+      options[:sheet] = @klass.table_name unless options.has_key?(:sheet)
+      options[:delete] = true unless options.has_key?(:delete)
+      data.default_sheet = options[:sheet] if options[:sheet]
+
       ActiveRecord::Base.transaction do
-        ActiveRecord::Base.connection.execute("DELETE FROM #{klass.table_name}")
+        ActiveRecord::Base.connection.execute("DELETE FROM #{klass.table_name}") if options[:delete]
 
         (2..data.last_row).each do |row_num|
           import_row! data.row(row_num)
@@ -41,7 +49,7 @@ module Importeroo
     end
 
     def import_row!(row)
-      record = klass.new
+      record = @klass.new
 
       fields.each do |field|
         record.public_send(field.assignment_method_name, row[field.column_num])
