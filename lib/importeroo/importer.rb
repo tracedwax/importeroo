@@ -3,15 +3,25 @@ require 'roo'
 module Importeroo
   mattr_accessor :google_username, :google_password
 
-  class Importer < Struct.new(:data_source_type, :data_source)
+  class Importer < Struct.new(:klass, :data_source_type, :data_source)
     FIELDS_TO_EXCLUDE = ["created_at", "updated_at"]
 
-    def import!(klass, options = {})
-      @klass=klass
-      @fields=nil
-      @data=nil
+    def slurp(options={})
+      tables_seen = {}
 
-      options[:sheet] = @klass.table_name unless options.has_key?(:sheet)
+      data.sheets.each { |sheet|
+        self.klass=sheet.classify.safe_constantize
+        STDERR.puts "Not loading #{sheet} because class cannot be found" && next unless self.klass
+        @fields=nil
+        import!( sheet: sheet, delete: !tables_seen.has_key?(klass.table_name))
+        tables_seen[klass.table_name]=true
+      }
+
+    end
+
+    def import!(options = {})
+
+      options[:sheet] = klass.table_name unless options.has_key?(:sheet)
       options[:delete] = true unless options.has_key?(:delete)
       data.default_sheet = options[:sheet] if options[:sheet]
 
@@ -49,7 +59,7 @@ module Importeroo
     end
 
     def import_row!(row)
-      record = @klass.new
+      record = klass.new
 
       fields.each do |field|
         record.public_send(field.assignment_method_name, row[field.column_num])
