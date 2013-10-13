@@ -6,9 +6,26 @@ module Importeroo
   class Importer < Struct.new(:klass, :data_source_type, :data_source)
     FIELDS_TO_EXCLUDE = ["created_at", "updated_at"]
 
-    def import!
+    def slurp!(options={})
+      tables_seen = {}
+
+      data.sheets.each { |sheet|
+        self.klass=sheet.classify.safe_constantize
+        STDERR.puts "Not loading #{sheet} because class cannot be found" && next unless self.klass
+        @fields=nil
+        import!( sheet: sheet, delete: !tables_seen.has_key?(klass.table_name))
+        tables_seen[klass.table_name]=true
+      }
+
+    end
+
+    def import!(options = {})
+
+      options[:delete] = true unless options.has_key?(:delete)
+      data.default_sheet = options[:sheet] if options[:sheet]
+
       ActiveRecord::Base.transaction do
-        ActiveRecord::Base.connection.execute("DELETE FROM #{klass.table_name}")
+        ActiveRecord::Base.connection.execute("DELETE FROM #{klass.table_name}") if options[:delete]
 
         (2..data.last_row).each do |row_num|
           import_row! data.row(row_num)

@@ -45,3 +45,15 @@ Recommended path to file:
 
     data/import/my_active_record_class_pluralized.csv
 
+### Slurping Spreadsheets
+
+In seeds.rb
+
+    require 'importeroo/importer'
+    Importeroo::Importer.new(nil, "Excelx", "data/import/seed_data.xlsx").slurp!
+
+Iterates for all sheets in spreadsheet and tries to convert the sheet name to a class. If it can it will load all
+seed data using that class. In the case of single table inheritance slurp will not delete the data table when loading
+the second onwards classes that use the same table.
+
+Table names are run through ActiveSupport::Inflector.classify to turn plurals into proper model class names.
