@@ -21,7 +21,6 @@ module Importeroo
 
     def import!(options = {})
 
-      options[:sheet] = klass.table_name unless options.has_key?(:sheet)
       options[:delete] = true unless options.has_key?(:delete)
       data.default_sheet = options[:sheet] if options[:sheet]
 
