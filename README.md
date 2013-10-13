@@ -50,7 +50,7 @@ Recommended path to file:
 In seeds.rb
 
     require 'importeroo/importer'
-    Importeroo::Importer.new(nil, "Excelx", "data/import/seed_data.xlsx").slurp
+    Importeroo::Importer.new(nil, "Excelx", "data/import/seed_data.xlsx").slurp!
 
 Iterates for all sheets in spreadsheet and tries to convert the sheet name to a class. If it can it will load all
 seed data using that class. In the case of single table inheritance slurp will not delete the data table when loading

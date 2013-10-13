@@ -6,7 +6,7 @@ module Importeroo
   class Importer < Struct.new(:klass, :data_source_type, :data_source)
     FIELDS_TO_EXCLUDE = ["created_at", "updated_at"]
 
-    def slurp(options={})
+    def slurp!(options={})
       tables_seen = {}
 
       data.sheets.each { |sheet|
